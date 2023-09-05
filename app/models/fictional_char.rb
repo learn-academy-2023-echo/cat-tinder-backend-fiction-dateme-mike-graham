@@ -1,0 +1,2 @@
+class FictionalChar < ApplicationRecord
+end

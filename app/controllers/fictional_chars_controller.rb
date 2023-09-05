@@ -1,0 +1,2 @@
+class FictionalCharsController < ApplicationController
+end
