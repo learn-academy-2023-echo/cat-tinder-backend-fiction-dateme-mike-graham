@@ -54,4 +54,50 @@ RSpec.describe "FictionalChars", type: :request do
       expect(fictional_char['name']).to include "can't be blank"
     end
   end
+  describe "PATCH /update" do
+   it "updates a char" do
+    fictional_char_params = {
+      fictional_char: {
+        name: 'Date Mike',
+        age: 47,
+        enjoys: 'Playing pool and wearing a Kangol hat and impressing chicks',
+        image: 'https://i.redd.it/voer03gdaj911.png'
+      }
+    }
+      post '/fictional_chars', params: fictional_char_params
+      fictional_char = FictionalChar.first
+
+      updated_fictional_char_params = {
+        fictional_char: {
+          name: 'Date Mike',
+          age: 47,
+          enjoys: 'Playing pool and wearing a Kangol hat and impressing chicks',
+          image: 'https://i.redd.it/voer03gdaj911.png'
+        }
+      }
+      patch "/fictional_chars/#{fictional_char.id}", params: updated_fictional_char_params
+      updated_fictional_char = FictionalChar.find(fictional_char.id)
+      expect(response).to have_http_status(200)
+      expect(updated_fictional_char.age).to eq 47
+    end
+  end
+  describe "DELETE /destroy" do 
+    it "deletes a char" do 
+      fictional_char_params = {
+        fictional_char: {
+          name: 'Date Mike',
+          age: 47,
+          enjoys: 'Playing pool and wearing a Kangol hat and impressing chicks',
+          image: 'https://i.redd.it/voer03gdaj911.png'
+        }
+      }
+
+      post "/fictional_chars", params: fictional_char_params
+      fictional_char = FictionalChar.first
+      delete "/fictional_chars/#{fictional_char.id}"
+      expect(response).to have_http_status(200)
+      fictional_chars = FictionalChar.all 
+      expect(fictional_chars).to be_empty
+    end
+  end
 end

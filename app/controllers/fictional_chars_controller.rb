@@ -14,9 +14,15 @@ class FictionalCharsController < ApplicationController
   end
 
   def update
+    fictional_char = FictionalChar.find(params[:id])
+    fictional_char.update(fictional_char_params)
+    render json: fictional_char
   end
 
   def destroy
+    fictional_char = FictionalChar.find(params[:id])
+    fictional_char.destroy
+    render json: fictional_char
   end
 
   private
